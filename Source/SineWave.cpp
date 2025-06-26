@@ -8,7 +8,6 @@ void SineWave::prepare (const double rate, const int numChannels)
 {
     sampleRate = static_cast<float>(rate);
     timeIncrement = 1.0f / sampleRate;
-
     currentTime.resize(numChannels, 0.0f);
 }
 
