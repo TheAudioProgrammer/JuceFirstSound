@@ -52,12 +52,6 @@ juce_add_plugin(${PROJECT_NAME}
         PRODUCT_NAME "JuceFirstSound"
 )
 
-set_target_properties(${PROJECT_NAME} PROPERTIES
-        JUCE_GENERATE_PLUGIN_HOST_AU TRUE
-        JUCE_GENERATE_PLUGIN_HOST_VST3 TRUE
-)
-
-
 # How we want our SourceFiles to appear in our IDE
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SourceFiles})
 
