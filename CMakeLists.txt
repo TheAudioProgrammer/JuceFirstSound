@@ -3,9 +3,8 @@ cmake_minimum_required(VERSION 3.24)
 # Change to your project name
 project(JuceFirstSound VERSION 0.0.1)
 
-
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_XCODE_GENERATE_SCHEME OFF)
+set(CMAKE_XCODE_GENERATE_SCHEME ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # We're going to use CPM as our package manager to bring in JUCE
@@ -52,6 +51,12 @@ juce_add_plugin(${PROJECT_NAME}
         FORMATS VST3 AU Standalone
         PRODUCT_NAME "JuceFirstSound"
 )
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+        JUCE_GENERATE_PLUGIN_HOST_AU TRUE
+        JUCE_GENERATE_PLUGIN_HOST_VST3 TRUE
+)
+
 
 # How we want our SourceFiles to appear in our IDE
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SourceFiles})

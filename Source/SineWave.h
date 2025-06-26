@@ -12,16 +12,17 @@
 class SineWave
 {
 public:
-    void prepare (double rate);
+    void prepare (double rate, int numChannels);
     void process (juce::AudioBuffer<float>& buffer);
 
 private:
-    float currentTime = 0.0f;
+    // Need to keep track of time separately for each channel
+    std::vector<float> currentTime;
     float frequency = 440.0f;
-    float amplitude = 0.5f;
+    float amplitude = 0.05f;
     float sampleRate = 0.0f;
     float timeIncrement = 0.0f;
-    constexpr float doublePi = 2.0f * std::numbers::pi_v<float>;
+    static constexpr float doublePi = 2.0f * std::numbers::pi_v<float>;
 };
 
 #endif //SINEWAVE_H
