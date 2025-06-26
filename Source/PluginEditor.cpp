@@ -6,9 +6,11 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     : AudioProcessorEditor (&p), processorRef (p)
 {
     juce::ignoreUnused (processorRef);
-    // Make sure that before the constructor has finished, you've set the
-    // editor's size to whatever you need it to be.
-    setSize (400, 300);
+
+    juce::MemoryInputStream imageStream(BinaryData::tap_logo_png, BinaryData::tap_logo_pngSize, false);
+    tapLogo = juce::ImageFileFormat::loadFrom(imageStream);
+
+    setSize (400, 400);
 }
 
 AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor()
@@ -19,11 +21,26 @@ AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor()
 void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll (juce::Colours::black);
 
-    g.setColour (juce::Colours::white);
-    g.setFont (15.0f);
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+    if (tapLogo.isValid())
+    {
+        const auto bounds = getLocalBounds();
+        const auto imageWidth = tapLogo.getWidth() / 12;
+        const auto imageHeight = tapLogo.getHeight() / 12;
+
+        // Calculate the position to center the scaled image
+        const auto x = bounds.getCentreX() - imageWidth / 2;
+        const auto y = bounds.getCentreY() - imageHeight / 2;
+
+        // Draw the image, scaled
+        g.drawImage(tapLogo,
+                    x, y,
+                    imageWidth, imageHeight,
+                    0, 0,
+                    tapLogo.getWidth(),
+                    tapLogo.getHeight());
+    }
 }
 
 void AudioPluginAudioProcessorEditor::resized()

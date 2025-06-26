@@ -52,6 +52,12 @@ juce_add_plugin(${PROJECT_NAME}
         PRODUCT_NAME "JuceFirstSound"
 )
 
+juce_add_binary_data(BinaryData
+        SOURCES
+        Assets/tap_logo.png
+)
+
+
 # How we want our SourceFiles to appear in our IDE
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SourceFiles})
 
@@ -82,5 +88,6 @@ target_link_libraries(${PROJECT_NAME}
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
         juce::juce_recommended_warning_flags
+        BinaryData
 )
 
