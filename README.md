@@ -52,5 +52,4 @@ The plugin builds for:
 
 ## Credits
 
-Created using the JUCE framework
-Company: theaudioprogrammer
+Company: The Audio Programmer
