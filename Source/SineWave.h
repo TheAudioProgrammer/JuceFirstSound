@@ -24,7 +24,7 @@ private:
     // Need to keep track of time separately for each channel of audio
     std::vector<float> currentTime;
     float frequency = 440.0f;
-    float amplitude = 0.05f;
+    float amplitude = 0.02f;
     float sampleRate = 0.0f;
     float timeIncrement = 0.0f;
     static constexpr float doublePi = 2.0f * std::numbers::pi_v<float>;
