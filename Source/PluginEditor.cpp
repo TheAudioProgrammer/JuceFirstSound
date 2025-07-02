@@ -3,12 +3,19 @@
 
 //==============================================================================
 AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p)
-    : AudioProcessorEditor (&p), processorRef (p)
+    : AudioProcessorEditor (&p), processorRef (p), frequencySliderAttachment (processorRef.parameters, "frequency", frequencySlider)
 {
     juce::ignoreUnused (processorRef);
 
     juce::MemoryInputStream imageStream(BinaryData::tap_logo_png, BinaryData::tap_logo_pngSize, false);
     tapLogo = juce::ImageFileFormat::loadFrom(imageStream);
+
+    frequencySlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
+    frequencySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 24);
+    addAndMakeVisible (frequencySlider);
+
+    frequencyLabel.setJustificationType(juce::Justification::centred);
+    addAndMakeVisible (frequencyLabel);
 
     setSize (400, 400);
 }
@@ -26,12 +33,11 @@ void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
     if (tapLogo.isValid())
     {
         const auto bounds = getLocalBounds();
-        const auto imageWidth = tapLogo.getWidth() / 12;
-        const auto imageHeight = tapLogo.getHeight() / 12;
+        const auto imageWidth = tapLogo.getWidth() / 36;
+        const auto imageHeight = tapLogo.getHeight() / 36;
 
-        // Calculate the position to center the scaled image
-        const auto x = bounds.getCentreX() - imageWidth / 2;
-        const auto y = bounds.getCentreY() - imageHeight / 2;
+        const auto x = 10;
+        const auto y = 10;
 
         // Draw the image, scaled
         g.drawImage(tapLogo,
@@ -45,6 +51,6 @@ void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
 
 void AudioPluginAudioProcessorEditor::resized()
 {
-    // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+    frequencyLabel.setBounds (getWidth() / 2 - 50, getHeight() / 2 - 120, 100, 20);
+    frequencySlider.setBounds (getWidth() / 2 - 100, getHeight() / 2 - 100, 200, 200);
 }

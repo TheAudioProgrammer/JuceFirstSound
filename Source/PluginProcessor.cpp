@@ -10,12 +10,14 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), parameters(*this, nullptr, "ParameterTree", createParameterLayout())
 {
+    parameters.addParameterListener("frequency", this);
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor()
 {
+    parameters.removeParameterListener("frequency", this);
 }
 
 //==============================================================================
@@ -167,4 +169,26 @@ void AudioPluginAudioProcessor::setStateInformation (const void* data, int sizeI
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new AudioPluginAudioProcessor();
+}
+
+juce::AudioProcessorValueTreeState::ParameterLayout AudioPluginAudioProcessor::createParameterLayout()
+{
+    std::vector<std::unique_ptr<juce::RangedAudioParameter>> parameterList;
+
+    juce::NormalisableRange<float> frequencyRange { 20.0f, 20000.0f, 0.1f, 0.5f };
+
+    parameterList.push_back(std::make_unique<juce::AudioParameterFloat>("frequency",
+                                                                                    "Frequency",
+                                                                                    frequencyRange,
+                                                                                    500.0f));
+
+    return { parameterList.begin(), parameterList.end() };
+}
+
+void AudioPluginAudioProcessor::parameterChanged(const juce::String& parameterID, float newValue)
+{
+    if (parameterID == "frequency")
+    {
+        sineWave.setFrequency (newValue);
+    }
 }

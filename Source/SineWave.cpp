@@ -15,7 +15,6 @@ void SineWave::process (juce::AudioBuffer<float>& buffer)
 {
     // You didn't call prepare!
     assert (sampleRate > 0.0f && timeIncrement > 0.0f);
-
     assert(amplitude >= 0.0f && amplitude <= 1.0f);
     assert(buffer.getNumChannels() == currentTime.size());
 
