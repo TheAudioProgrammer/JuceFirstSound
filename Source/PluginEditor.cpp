@@ -7,15 +7,29 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
 {
     juce::ignoreUnused (processorRef);
 
-    juce::MemoryInputStream imageStream(BinaryData::tap_logo_png, BinaryData::tap_logo_pngSize, false);
-    tapLogo = juce::ImageFileFormat::loadFrom(imageStream);
+    juce::MemoryInputStream imageStream (BinaryData::tap_logo_png, BinaryData::tap_logo_pngSize, false);
+    tapLogo = juce::ImageFileFormat::loadFrom (imageStream);
 
-    frequencySlider.setSliderStyle(juce::Slider::SliderStyle::LinearVertical);
-    frequencySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 24);
+    frequencySlider.setSliderStyle (juce::Slider::SliderStyle::LinearVertical);
+    frequencySlider.setTextBoxStyle (juce::Slider::TextBoxBelow, true, 50, 24);
     addAndMakeVisible (frequencySlider);
 
-    frequencyLabel.setJustificationType(juce::Justification::centred);
+    frequencyLabel.setJustificationType (juce::Justification::centred);
     addAndMakeVisible (frequencyLabel);
+
+    playButton.setButtonText ("Playing");
+    playButton.setClickingTogglesState (true);
+    playButton.setToggleState (true, juce::NotificationType::dontSendNotification);
+    playButton.setColour (juce::TextButton::ColourIds::buttonOnColourId, juce::Colours::green);
+    playButton.setColour (juce::TextButton::ColourIds::buttonColourId, juce::Colours::red);
+
+    playButton.onClick = [&]()
+    {
+        const auto isBypassed = playButton.getToggleState();
+        playButton.setButtonText (isBypassed ? "Playing" : "Bypassed");
+    };
+
+    addAndMakeVisible (playButton);
 
     setSize (400, 400);
 }
@@ -53,4 +67,5 @@ void AudioPluginAudioProcessorEditor::resized()
 {
     frequencyLabel.setBounds (getWidth() / 2 - 50, getHeight() / 2 - 120, 100, 20);
     frequencySlider.setBounds (getWidth() / 2 - 100, getHeight() / 2 - 100, 200, 200);
+    playButton.setBounds (getWidth() / 2 - 50, getHeight() / 2 + 120, 100, 20);
 }

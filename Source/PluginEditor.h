@@ -18,6 +18,8 @@ private:
     juce::Image tapLogo;
     juce::Slider frequencySlider;
     juce::Label frequencyLabel { "Freq Label", "Frequency" };
+
+    juce::TextButton playButton;
     AudioPluginAudioProcessor& processorRef;
     juce::AudioProcessorValueTreeState::SliderAttachment frequencySliderAttachment;
 

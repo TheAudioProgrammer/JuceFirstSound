@@ -8,6 +8,7 @@
 #include <cmath>
 #include <numbers>
 
+// Sine Wave Class with no JUCE dependencies
 class SineWaveChannel
 {
 public:
@@ -26,7 +27,5 @@ private:
     float timeIncrement = 0.0f;
     float currentTime = 0.0f;
 };
-
-
 
 #endif //SINEWAVECHANNEL_H
